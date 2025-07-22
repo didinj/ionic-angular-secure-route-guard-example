@@ -1,14 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Book } from '../book/book';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { Book } from '../book';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-
   apiUrl = 'http://localhost:3000/api/';
 
   constructor(private http: HttpClient) { }
@@ -21,7 +19,7 @@ export class BookService {
       );
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -39,4 +37,5 @@ export class BookService {
   private log(message: string) {
     console.log(message);
   }
+
 }

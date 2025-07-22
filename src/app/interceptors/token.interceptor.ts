@@ -1,25 +1,13 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpResponse,
-  HttpErrorResponse
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import {
-  Router
-} from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { catchError, map, Observable, throwError } from "rxjs";
+import { ToastController } from '@ionic/angular/standalone';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-
-  constructor(
-    private router: Router,
-    public toastController: ToastController) {}
+  constructor(private router: Router,
+    public toastController: ToastController) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -64,7 +52,7 @@ export class TokenInterceptor implements HttpInterceptor {
       }));
   }
 
-  async presentToast(msg) {
+  async presentToast(msg: any) {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,

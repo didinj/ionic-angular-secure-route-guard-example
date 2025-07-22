@@ -1,5 +1,11 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content padding>
-  <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
+  <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit()">
     <ion-card>
       <ion-card-header>
         <ion-card-title>Please, Sign In</ion-card-title>
@@ -14,10 +20,26 @@
           <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>
         <ion-item lines="none" lines="full" padding-top>
-          <ion-button expand="full" size="default" shape="round" color="success" type="submit" [disabled]="!loginForm.valid">Login</ion-button>
+          <ion-button
+            expand="full"
+            size="default"
+            shape="round"
+            color="success"
+            type="submit"
+            [disabled]="!loginForm!.valid"
+            >Login</ion-button
+          >
         </ion-item>
         <ion-item lines="none">
-          <ion-button type="button" expand="full" size="default" shape="round" color="medium" (click)="register()">Register</ion-button>
+          <ion-button
+            type="button"
+            expand="full"
+            size="default"
+            shape="round"
+            color="medium"
+            (click)="register()"
+            >Register</ion-button
+          >
         </ion-item>
       </ion-card-content>
     </ion-card>

@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { computed, Injectable, signal } from '@angular/core';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +8,16 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
 
   apiUrl = 'http://localhost:3000/api/';
-  isLoggedIn = false;
-  redirectUrl: string;
+  private _loggedIn = signal(false);
+  readonly isLoggedIn = computed(() => this._loggedIn());
+  redirectUrl: string | undefined;
 
   constructor(private http: HttpClient) { }
 
   login(data: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'signin', data)
       .pipe(
-        tap(_ => this.isLoggedIn = true),
+        tap(_ => this._loggedIn.set(true)),
         catchError(this.handleError('login', []))
       );
   }
@@ -25,7 +25,7 @@ export class AuthService {
   logout(): Observable<any> {
     return this.http.get<any>(this.apiUrl + 'signout')
       .pipe(
-        tap(_ => this.isLoggedIn = false),
+        tap(_ => this._loggedIn.set(false)),
         catchError(this.handleError('logout', []))
       );
   }
